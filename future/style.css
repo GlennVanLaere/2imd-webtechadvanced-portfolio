@@ -1,0 +1,24 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: ubuntu;
+}
+
+div{
+text-align: center;
+background-color: #e3295a;
+padding-top: 20px;
+padding-bottom: 20px;
+margin-left: 10px;
+margin-right: 10px;
+margin-top: 20px;
+}
+.blue-box{
+    background-color:lightskyblue;
+}
+.inf{
+    background-color: yellow;
+}
+h1{
+    font-size: 30px;
+}
