@@ -32,3 +32,46 @@ h1{
         grid-row-gap: 0px;
     }
 }
+@media (min-width: 1000px){
+    section {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        grid-template-areas:
+            "box1 box2 box3 box4 box5"
+            "box8 box7 box3 box6 box6"
+            "box9 box10 box3 box6 box6";
+    }
+    #blok1{
+        grid-area: box1; 
+    }
+    #blok2{
+        grid-area: box2;
+    }
+    #blok3{
+        grid-area: box3;
+    }
+    #blok4{
+        grid-area: box4;
+    }
+    #blok5{
+        grid-area: box5;
+    }
+    #blok6{
+        grid-area: box6;
+    }
+    #blok7{
+        grid-area:box7;
+    }
+    #blok8{
+        grid-area: box8;
+    }
+    #blok9{
+        grid-area: box9; 
+    }
+    #blok10{
+        grid-area: box10; 
+    }
+}
