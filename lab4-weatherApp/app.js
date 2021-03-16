@@ -1,5 +1,17 @@
-Class App {
+class App {
     constructor() {
-        console.log("started!");
+        this.getLocation();
+    }
+    getLocation(){
+        navigator.geolocation.getCurrentPosition(this.gotLocation, this.errorLocation);
+    }
+    gotLocation(result){
+        console.log(result);
+    }
+    errorµ(err){
+        console.log(err);
     }
 }
+
+
+let app = new App();
