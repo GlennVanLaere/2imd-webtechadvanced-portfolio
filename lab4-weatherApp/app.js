@@ -20,7 +20,7 @@ class App {
     getWeather(){
     //https://api.darksky.net/forecast/578f34885a24431ca5ea046be74456ce/37.8267,-122.4233
     let url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/578f34885a24431ca5ea046be74456ce/${this.lat},${this.lng}?units=si` 
-    //fetch(url)
+    fetch(url)
     .then(response => {
         return response.json();
     })
@@ -28,7 +28,7 @@ class App {
         let temp =  data.currently.temperature;
         console.log(temp);
         document.querySelector("#temp").innerHTML = 
-        temp;
+        temp+ "° outside";
 
         if (temp < 15) {
             console.log("temp under 15");
@@ -37,7 +37,7 @@ class App {
         }
         else{
             console.log("temp above 15");
-            document.getElementById("text").innerHTML = "Time to get your bike outside";
+            document.getElementById("text").innerHTML = "Time to get your bike outside of our storages! See you tonight!";
            document.querySelector("#button").style.display = "none";
 
         }
