@@ -20,22 +20,29 @@ class App {
     getWeather(){
     //https://api.darksky.net/forecast/578f34885a24431ca5ea046be74456ce/37.8267,-122.4233
     let url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/578f34885a24431ca5ea046be74456ce/${this.lat},${this.lng}?units=si` 
-    fetch(url)
+    //fetch(url)
     .then(response => {
         return response.json();
     })
     .then(data => {
         let temp =  data.currently.temperature;
         console.log(temp);
+        document.querySelector("#temp").innerHTML = 
+        temp;
 
-        if (temp < 10) {
-            document.querySelector(".ad").innerHTML = 
-            "kleiner dan 10"
+        if (temp < 15) {
+            console.log("temp under 15");
+            document.getElementById("text").innerHTML = "no cycling weather? no worries get 50% off on your storage today!";
+            document.querySelector("#button").style.display = "inline-block";
         }
         else{
-            document.querySelector(".ad").innerHTML = 
-            "groter dan 10"
+            console.log("temp above 15");
+            document.getElementById("text").innerHTML = "Time to get your bike outside";
+           document.querySelector("#button").style.display = "none";
+
         }
+        //localStorage.setItem("currentWeather", JSON.stringify(data));
+        //localStorage.setItem("time", time.getTime());
         
             
     }).catch(err => {
