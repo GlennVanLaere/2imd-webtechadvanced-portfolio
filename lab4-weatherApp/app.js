@@ -13,6 +13,7 @@ class App {
         this.lat = result.coords.latitude;
         this.lng = result.coords.longitude;
         this.getWeather();
+        this.getQuote();
     }
     errorLocation(err){
         console.log(err);
@@ -51,6 +52,21 @@ class App {
 
 
     }
+    getQuote(){
+        let quoteUrl = `https://api.quotable.io/random?tags=famous-quotes`
+        fetch(quoteUrl)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.content);
+            let author = data.author;
+            let quote = data.content;
+            document.querySelector("#quoteAuth").innerHTML = "relax and enjoy your quote by" + author;
+            document.querySelector("#quote").innerHTML = quote;
+        })
+    }
+
 }
 
 
