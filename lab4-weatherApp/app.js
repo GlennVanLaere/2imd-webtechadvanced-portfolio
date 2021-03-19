@@ -12,7 +12,13 @@ class App {
     gotLocation(result){
         this.lat = result.coords.latitude;
         this.lng = result.coords.longitude;
-        this.getWeather();
+        this.timeCalc();
+        if(this.timeCalc === true){
+            this.getWeather();
+        }
+        else{
+            this.getFromLocal();
+        }
         this.getQuote();
     }
     errorLocation(err){
@@ -21,13 +27,60 @@ class App {
     getWeather(){
     //https://api.darksky.net/forecast/578f34885a24431ca5ea046be74456ce/37.8267,-122.4233
     let url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/578f34885a24431ca5ea046be74456ce/${this.lat},${this.lng}?units=si` 
-    fetch(url)
+    fetch(url) 
     .then(response => {
         return response.json();
     })
     .then(data => {
         let temp =  data.currently.temperature;
         console.log(temp);
+        let time = new Date();
+        localStorage.setItem("temperature", temp);
+        localStorage.setItem("time", time.getTime());
+        this.adInput(temp);
+
+            
+    }).catch(err => {
+        console.log(err);
+    });
+    
+
+
+    }
+    getFromLocal(){
+        let temp = localStorage.getItem("temperature");
+        this.adInput(temp);
+    }
+    getQuote(){
+        let quoteUrl = `https://api.quotable.io/random?tags=famous-quotes`
+        fetch(quoteUrl)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.content);
+            let author = data.author;
+            let quote = data.content;
+            document.querySelector("#quoteAuth").innerHTML = "relax and enjoy your quote by " + author;
+            document.querySelector("#quote").innerHTML = quote;
+        })
+    }
+    timeCalc(){
+        let storageTimestamp = localStorage.getItem("time");
+        console.log(storageTimestamp);
+        let currentTime = new Date();
+        console.log(currentTime.getTime());
+        if(currentTime.getTime() > storageTimestamp+3600){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
+        
+    }
+    adInput(temp){
         document.querySelector("#temp").innerHTML = 
         temp+ "° outside";
 
@@ -42,29 +95,6 @@ class App {
            document.querySelector("#button").style.display = "none";
 
         }
-        //localStorage.setItem("currentWeather", JSON.stringify(data));
-        //localStorage.setItem("time", time.getTime());
-        
-            
-    }).catch(err => {
-        console.log(err);
-    });
-
-
-    }
-    getQuote(){
-        let quoteUrl = `https://api.quotable.io/random?tags=famous-quotes`
-        fetch(quoteUrl)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            console.log(data.content);
-            let author = data.author;
-            let quote = data.content;
-            document.querySelector("#quoteAuth").innerHTML = "relax and enjoy your quote by" + author;
-            document.querySelector("#quote").innerHTML = quote;
-        })
     }
 
 }
