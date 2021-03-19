@@ -13,12 +13,6 @@ class App {
         this.lat = result.coords.latitude;
         this.lng = result.coords.longitude;
         this.timeCalc();
-        if(this.timeCalc === true){
-            this.getWeather();
-        }
-        else{
-            this.getFromLocal();
-        }
         this.getQuote();
     }
     errorLocation(err){
@@ -35,9 +29,11 @@ class App {
         let temp =  data.currently.temperature;
         console.log(temp);
         let time = new Date();
+        
         localStorage.setItem("temperature", temp);
         localStorage.setItem("time", time.getTime());
         this.adInput(temp);
+        console.log("new data");
 
             
     }).catch(err => {
@@ -50,6 +46,7 @@ class App {
     getFromLocal(){
         let temp = localStorage.getItem("temperature");
         this.adInput(temp);
+        console.log("old data");
     }
     getQuote(){
         let quoteUrl = `https://api.quotable.io/random?tags=famous-quotes`
@@ -68,13 +65,18 @@ class App {
     timeCalc(){
         let storageTimestamp = localStorage.getItem("time");
         console.log(storageTimestamp);
-        let currentTime = new Date();
-        console.log(currentTime.getTime());
-        if(currentTime.getTime() > storageTimestamp+3600){
-            return true;
+        let currentDate = new Date();
+        let currentTime = currentDate.getTime();
+        let timeCanPass = 3600000;
+        let calc = parseInt(currentTime) - parseInt(storageTimestamp);
+        console.log(calc + " new time");
+    
+        
+        if(calc > timeCanPass){
+            this.getWeather();
         }
         else{
-            return false;
+            this.getFromLocal();
         }
 
 
