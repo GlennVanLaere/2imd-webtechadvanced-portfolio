@@ -72,7 +72,8 @@ class App {
         console.log(calc + " new time");
     
         
-        if(calc > timeCanPass){
+        if(calc > timeCanPass | storageTimestamp == null){
+            localStorage.clear();
             this.getWeather();
         }
         else{
